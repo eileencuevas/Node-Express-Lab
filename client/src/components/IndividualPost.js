@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import Post from './Post';
 
@@ -16,7 +17,7 @@ class IndividualPost extends React.Component {
             .get(`http://localhost:5000/api/posts/${postId}`)
             .then(response => {
                 console.log(response.data);
-                this.setState({ post : response.data})
+                this.setState({ post : response.data[0]})
             })
             .catch(error => {
                 console.log(error);
@@ -34,7 +35,10 @@ class IndividualPost extends React.Component {
         }
 
         return(
-            <Post data={this.state.post[0]} />
+            <>
+                <Post data={this.state.post} />
+                <Link to='/'><p>Return Home</p></Link>
+            </>
         );
     }
 
