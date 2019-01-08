@@ -29,11 +29,11 @@ server.get('/api/posts/:id', (req, res) => {
         .then(post => {
             {post.length > 0 ? 
                 res.status(200).json(post) : 
-                res.status(404).json({ error: 'The post information could not be retrieved.' })
+                res.status(404).json({ 'error': 'The post information could not be retrieved.' })
             }
         })
         .catch(() => {
-            res.status(500).json({ error: 'The posts information could not be retrieved.' })
+            res.status(500).json({ 'error': 'The posts information could not be retrieved.' })
         });
 })
 

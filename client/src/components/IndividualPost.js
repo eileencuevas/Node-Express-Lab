@@ -1,8 +1,28 @@
 import React from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import Post from './Post';
+
+const SoleContainer = styled.div`
+    height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #4281A4;
+`
+
+const LinkDiv = styled(Link)`
+    text-decoration: none;
+    color: #EAD2AC;
+`
+
+const Loading = styled.p`
+    color: #EAD2AC;
+`
 
 class IndividualPost extends React.Component {
     constructor(props) {
@@ -31,14 +51,18 @@ class IndividualPost extends React.Component {
 
     render() {
         if (!this.state.post) {
-            return <p className='loading'>No Post Found!</p>
+            return(
+                <SoleContainer>
+                    <Loading>No Post Found!</Loading>
+                </SoleContainer>
+            );
         }
 
         return(
-            <>
+            <SoleContainer>
                 <Post data={this.state.post} />
-                <Link to='/'><p>Return Home</p></Link>
-            </>
+                <LinkDiv to='/'><p>Return Home</p></LinkDiv>
+            </SoleContainer>
         );
     }
 
