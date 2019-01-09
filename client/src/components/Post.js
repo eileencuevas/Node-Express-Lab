@@ -1,12 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { QuotesLeft, QuotesRight } from 'styled-icons/icomoon';
-
-const LinkDiv = styled(Link)`
-    text-decoration: none;
-    color: black;
-`
 
 const IndividualPost = styled.div`
     height: 300px;
@@ -49,17 +43,25 @@ const RightQuote = styled(QuotesRight)`
     opacity: 0.3;
 `
 
+const Loading = styled.p`
+    color: #EAD2AC;
+`
+
 const Post = props => {
-    return(
-        <LinkDiv to={`/posts/${props.data.id}`}>
+    if (props.data){
+        return(
             <IndividualPost>
                 <h2>{props.data.title}</h2>
                 <p>— {props.data.contents} ;)</p>
                 <LeftQuote />
                 <RightQuote />
             </IndividualPost>
-        </LinkDiv>
-    );
+        );
+    } else {
+        return(
+                <Loading>No Post Found!</Loading>
+        );
+    }
 }
 
 export default Post;

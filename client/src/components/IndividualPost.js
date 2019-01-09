@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -12,7 +11,6 @@ const SoleContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: #4281A4;
 `
 
 const LinkDiv = styled(Link)`
@@ -24,48 +22,24 @@ const Loading = styled.p`
     color: #EAD2AC;
 `
 
-class IndividualPost extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            post: null,
-        }
-    }
+const IndividualPost = props => {
+    const postId = props.match.params.postId;
+    const currentPost = props.posts.filter(post => post.id == postId)
 
-    fetchPost = postId => {
-        axios
-            .get(`http://localhost:5000/api/posts/${postId}`)
-            .then(response => {
-                console.log(response.data);
-                this.setState({ post : response.data[0]})
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    }
-
-    componentDidMount() {
-        const postId = this.props.match.params.postId;
-        this.fetchPost(postId);
-    }
-
-    render() {
-        if (!this.state.post) {
-            return(
-                <SoleContainer>
-                    <Loading>No Post Found!</Loading>
-                </SoleContainer>
-            );
-        }
-
+    if (currentPost && props.posts.length > 0) {
         return(
             <SoleContainer>
-                <Post data={this.state.post} />
+                <Post data={currentPost[0]} />
                 <LinkDiv to='/'><p>Return Home</p></LinkDiv>
             </SoleContainer>
         );
+    } else {
+        return(
+            <SoleContainer>
+                <Loading>No Post Found!</Loading>
+            </SoleContainer>
+        );
     }
-
 }
 
 export default IndividualPost;

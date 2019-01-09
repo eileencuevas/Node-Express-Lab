@@ -1,47 +1,35 @@
 import React from 'react';
-import axios from 'axios';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
 import Post from './Post';
 
+
 const ListContainer = styled.div`
+    margin-top: 80px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    background-color: #4281A4;
+`
+const LinkDiv = styled(Link)`
+    text-decoration: none;
+    color: black;
 `
 
-class PostsList extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-          posts: [],
-        }
-      }
-
-    componentDidMount() {
-        axios.get('http://localhost:5000/api/posts/')
-          .then(response => {
-            console.log(response.data);
-            this.setState({ posts: response.data });
-          })
-          .catch(error => {
-            console.log(error);
-          })
-      }
-
-    render() {
-        return(
-            <ListContainer>
-                {this.state.posts.map(post => (
+const PostsList = props => {
+    return(
+        <ListContainer>
+            {props.posts.map(post => (
+                <LinkDiv to={`/posts/${post.id}`}>
                     <Post 
                         key={post.id} 
                         data={post}
                         listView
-                    />
-                ))}
-            </ListContainer>
-        );
-        }
+                        />
+                </LinkDiv>
+            ))}
+        </ListContainer>
+    );
 }
 
 export default PostsList;
